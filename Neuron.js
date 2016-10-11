@@ -336,8 +336,8 @@
 	  ['h', 'when %m.buttons is %m.btnStates', 'whenButton', 'button A', 'pressed'],
       ['b', '%m.buttons pressed?', 'isButtonPressed', 'button A'],
       ['-'],
-	  [' ', 'send %m.input to Neuron', 'defaultdate']
-	  [' ', 'send %m.output from Neuron', 'Neurondate']
+	  [' ', 'send %m.input to Neuron', 'sendInput','defaultdate']
+	  [' ', 'send %m.output from Neuron','sendInput' ,'Neurondate']
 	];
   var menus = {
    
