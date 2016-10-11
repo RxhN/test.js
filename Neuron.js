@@ -343,8 +343,8 @@
    
       buttons: ['button A', 'button B', 'button C', 'button D'],
       btnStates: ['pressed', 'released'],
-	  input:['defaultdate','inputdata']
-	  output:['outdata']
+	  input:['defaultdate','inputdata'],
+	  output:['outdata'],
   }; 
   var descriptor = {
     blocks: blocks,
