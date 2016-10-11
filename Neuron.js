@@ -336,13 +336,15 @@
 	  ['h', 'when %m.buttons is %m.btnStates', 'whenButton', 'button A', 'pressed'],
       ['b', '%m.buttons pressed?', 'isButtonPressed', 'button A'],
       ['-'],
-	  [' ', 'send %m.input to Neuron', 'inputdata', 'defaultdate']
-	  [' ', 'send %m.output from Neuron', 'outdata', 'Neurondate']
+	  [' ', 'send %m.input to Neuron', 'defaultdate']
+	  [' ', 'send %m.output from Neuron', 'Neurondate']
 	];
   var menus = {
    
       buttons: ['button A', 'button B', 'button C', 'button D'],
       btnStates: ['pressed', 'released'],
+	  input:['defaultdate','inputdata']
+	  output:['outdata']
   }; 
   var descriptor = {
     blocks: blocks,
