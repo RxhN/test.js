@@ -63,6 +63,7 @@
   var inputData = null;
   var connected = false;
   var hwList = new HWList();
+	
   
   function HWList() {
     this.devices = [];
@@ -363,7 +364,7 @@
   };
 
   var blocks = [
-	['h', 'when device is connected', '_whenConnected'],
+	['h', 'when device is connected', 'whenConnected'],
 	[' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
 	['-'],
 	['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
