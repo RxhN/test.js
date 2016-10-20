@@ -367,9 +367,7 @@
 	['h', 'when device is connected', 'whenConnected'],
 	[' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
 	['-'],
-	['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
-	['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
-	['-'],
+	
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
     ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
