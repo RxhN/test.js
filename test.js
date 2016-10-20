@@ -364,9 +364,7 @@
   };
 
   var blocks = [
-	['h', 'when device is connected', 'whenConnected'],
-	[' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
-	['-'],
+	
 	
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
@@ -391,7 +389,7 @@
     outputs: ['on', 'off'],
     ops: ['>', '=', '<'],
     tiltDir: ['up', 'down', 'left', 'right']
-	hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],
+	
   };
 
   var descriptor = {
