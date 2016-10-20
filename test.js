@@ -364,9 +364,9 @@
   };
 
   var blocks = [
-	
-    ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
-    ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
+	['h', 'when device is connected', 'whenConnected'],
+    ['h', 'when %m.tiltDir %m.ops %n%', 'whenInput', 'up', '>', 50],
+    ['r', 'read %m.tiltDir', 'readInput', 'up'],
     ['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
@@ -391,7 +391,7 @@
     outputs: ['on', 'off'],
     ops: ['>', '=', '<'],
     tiltDir: ['up', 'down', 'left', 'right']
-    hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],
+   
   };
 
   var descriptor = {
