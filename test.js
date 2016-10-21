@@ -390,9 +390,9 @@
     analogOutputs: PWM_PINS,
     digitalInputs: DIGITAL_PINS,
     analogInputs: ANALOG_PINS,
-    outputs: ['开', '关'],  
+    outputs: ['on', off'],  
     ops: ['>', '=', '<'],
-    tiltDir: ['上', '下', '左', '右'],
+    tiltDir: ['up', 'down', 'left', 'right'],
     hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],  
     
   };
