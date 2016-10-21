@@ -363,7 +363,7 @@
   };
 
   var blocks = [
-  en:{
+  en:[
 	  ['h', 'when device is connected', 'whenConnected'],
 	  [' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
 	  ['-'],
@@ -383,8 +383,8 @@
       ['-'],
       [' ', 'set pin %d.digitalOutputs servo to %n degrees', 'rotateServo', 7, 90],
       ['r', 'pin %d.digitalOutputs servo position', 'servoPosition', 7]
-	 },
-   zh:{
+	 ],
+   zh:[
 	  ['h', '当设备连接的时候', 'whenConnected'],
 	  [' ', '连接 %m.hwIn 到管脚 %n', 'connectHW', 'rotation knob', 0],
 	  ['-'],
@@ -404,7 +404,7 @@
       ['-'],
       [' ', '设置 管脚 %d.digitalOutputs 的输出转动 到 %n degrees', 'rotateServo', 7, 90],
       ['r', '管脚 %d.digitalOutputs 电机状态', 'servoPosition', 7]   
-   },
+   ],
   ];
 
   var menus = {
