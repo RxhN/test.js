@@ -63,7 +63,6 @@
   var inputData = null;
   var connected = false;
   var hwList = new HWList();
-	
   
   function HWList() {
     this.devices = [];
@@ -79,7 +78,7 @@
       }
     };
 
-    this.search = function(dev) {
+    this.search = funcstion(dev) {
       for (var i=0; i<this.devices.length; i++) {
         if (this.devices[i].name === dev)
           return this.devices[i];
@@ -364,37 +363,72 @@
   };
 
   var blocks = [
-    ['h', 'when device is connected', 'whenConnected'],
-    [' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
-    ['-'],
-    ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
-    ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
-    ['-'],
-    [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
-    [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
-    ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
-    ['b', 'pin %d.digitalInputs on?', 'digitalRead', 9],
-    ['-'],
-    ['h', 'when analog pin %d.analogInputs %m.ops %n%', 'whenAnalogRead', 'A0', '>', 50],
-    ['r', 'read analog pin %d.analogInputs', 'analogRead', 'A0'],
-    ['-'],
-    ['h', 'when shaken', 'whenIMUEvent'],
-    ['r', 'tilt angle %m.tiltDir', 'getTilt', 'up'],
-    ['-'],
-    [' ', 'set pin %d.digitalOutputs servo to %n degrees', 'rotateServo', 7, 90],
-    ['r', 'pin %d.digitalOutputs servo position', 'servoPosition', 7]
+  en:{
+	  ['h', 'when device is connected', 'whenConnected'],
+	  [' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
+	  ['-'],
+	  ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
+	  ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
+	  ['-'],
+      [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
+      [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
+      ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
+      ['b', 'pin %d.digitalInputs on?', 'digitalRead', 9],
+      ['-'],
+      ['h', 'when analog pin %d.analogInputs %m.ops %n%', 'whenAnalogRead', 'A0', '>', 50],
+      ['r', 'read analog pin %d.analogInputs', 'analogRead', 'A0'],
+      ['-'],
+      ['h', 'when shaken', 'whenIMUEvent'],
+      ['r', 'tilt angle %m.tiltDir', 'getTilt', 'up'],
+      ['-'],
+      [' ', 'set pin %d.digitalOutputs servo to %n degrees', 'rotateServo', 7, 90],
+      ['r', 'pin %d.digitalOutputs servo position', 'servoPosition', 7]
+	 },
+   zh:{
+	  ['h', '当设备连接的时候', 'whenConnected'],
+	  [' ', '连接 %m.hwIn 到管脚 %n', 'connectHW', 'rotation knob', 0],
+	  ['-'],
+	  ['h', '当 %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
+	  ['r', '读 %m.hwIn', 'readInput', 'rotation knob'],
+	  ['-'],
+      [' ', '设置 管脚 %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
+      [' ', '设置 管脚 %d.analogOutputs 到 %n%', 'analogWrite', 9, 100],
+      ['h', '当 管脚 %d.digitalInputs 是 %m.outputs', 'whenDigitalRead', 9, 'on'],
+      ['b', '管脚 %d.digitalInputs 开?', 'digitalRead', 9],
+      ['-'],
+      ['h', '当 模拟信号 管脚 %d.analogInputs %m.ops %n%', 'whenAnalogRead', 'A0', '>', 50],
+      ['r', '读 模拟信号的 管脚 %d.analogInputs', 'analogRead', 'A0'],
+      ['-'],
+      ['h', '当摇晃的时候', 'whenIMUEvent'],
+      ['r', '向 %m.tiltDir 上倾斜', 'getTilt', 'up'],
+      ['-'],
+      [' ', '设置 管脚 %d.digitalOutputs 的输出转动 到 %n degrees', 'rotateServo', 7, 90],
+      ['r', '管脚 %d.digitalOutputs 电机状态', 'servoPosition', 7]   
+   },
   ];
 
   var menus = {
-    digitalOutputs: DIGITAL_PINS,
-    analogOutputs: PWM_PINS,
-    digitalInputs: DIGITAL_PINS,
-    analogInputs: ANALOG_PINS,
-    outputs: ['on', 'off'],  
-    ops: ['>', '=', '<'],
-    tiltDir: ['up', 'down', 'left', 'right'],
-    hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],  
-    
+	en:{
+      digitalOutputs: DIGITAL_PINS,
+      analogOutputs: PWM_PINS,
+      digitalInputs: DIGITAL_PINS,
+      analogInputs: ANALOG_PINS,
+      outputs: ['on', 'off'],
+      ops: ['>', '=', '<'],
+      tiltDir: ['up', 'down', 'left', 'right'],
+	  hwIn: ['rotation knob', 'light sensor', 'temperature sensor']
+	},
+	zh:{
+	  digitalOutputs: DIGITAL_PINS,
+      analogOutputs: PWM_PINS,
+      digitalInputs: DIGITAL_PINS,
+      analogInputs: ANALOG_PINS,
+      outputs: ['开', '光'],
+      ops: ['>', '=', '<'],
+      tiltDir: ['上', '下', '左', '右'],
+	  hwIn: ['旋钮', '光线传感器', '温度传感器']
+	},
+	
   };
 
   var descriptor = {
