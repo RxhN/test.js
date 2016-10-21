@@ -1,4 +1,4 @@
- /*This program is free software: you can redistribute it and/or modify
+/*This program is free software: you can redistribute it and/or modify
  *it under the terms of the GNU General Public License as published by
  *the Free Software Foundation, either version 3 of the License, or
  *(at your option) any later version.
@@ -63,6 +63,7 @@
   var inputData = null;
   var connected = false;
   var hwList = new HWList();
+	
   
   function HWList() {
     this.devices = [];
@@ -78,7 +79,7 @@
       }
     };
 
-    this.search = funcstion(dev) {
+    this.search = function(dev) {
       for (var i=0; i<this.devices.length; i++) {
         if (this.devices[i].name === dev)
           return this.devices[i];
@@ -363,39 +364,37 @@
   };
 
   var blocks = [
-	  ['h', 'when device is connected', 'whenConnected'],
-	  [' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
-	  ['-'],
-	  ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
-	  ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
-	  ['-'],
-      [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
-      [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
-      ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
-      ['b', 'pin %d.digitalInputs on?', 'digitalRead', 9],
-      ['-'],
-      ['h', 'when analog pin %d.analogInputs %m.ops %n%', 'whenAnalogRead', 'A0', '>', 50],
-      ['r', 'read analog pin %d.analogInputs', 'analogRead', 'A0'],
-      ['-'],
-      ['h', 'when shaken', 'whenIMUEvent'],
-      ['r', 'tilt angle %m.tiltDir', 'getTilt', 'up'],
-      ['-'],
-      [' ', 'set pin %d.digitalOutputs servo to %n degrees', 'rotateServo', 7, 90],
-      ['r', 'pin %d.digitalOutputs servo position', 'servoPosition', 7]
+    ['h', 'when device is connected', 'whenConnected'],
+    [' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
+    ['-'],
+    ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
+    ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
+    ['-'],
+    [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
+    [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
+    ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
+    ['b', 'pin %d.digitalInputs on?', 'digitalRead', 9],
+    ['-'],
+    ['h', 'when analog pin %d.analogInputs %m.ops %n%', 'whenAnalogRead', 'A0', '>', 50],
+    ['r', 'read analog pin %d.analogInputs', 'analogRead', 'A0'],
+    ['-'],
+    ['h', 'when shaken', 'whenIMUEvent'],
+    ['r', 'tilt angle %m.tiltDir', 'getTilt', 'up'],
+    ['-'],
+    [' ', 'set pin %d.digitalOutputs servo to %n degrees', 'rotateServo', 7, 90],
+    ['r', 'pin %d.digitalOutputs servo position', 'servoPosition', 7]
   ];
 
   var menus = {
-
-
-      digitalOutputs: DIGITAL_PINS,
-      analogOutputs: PWM_PINS,
-      digitalInputs: DIGITAL_PINS,
-      analogInputs: ANALOG_PINS,
-      outputs: ['on', 'off'],
-      ops: ['>', '=', '<'],
-      tiltDir: ['up', 'down', 'left', 'right'],
-	  hwIn: ['rotation knob', 'light sensor', 'temperature sensor']
-	
+    digitalOutputs: DIGITAL_PINS,
+    analogOutputs: PWM_PINS,
+    digitalInputs: DIGITAL_PINS,
+    analogInputs: ANALOG_PINS,
+    outputs: ['on', 'off'],  
+    ops: ['>', '=', '<'],
+    tiltDir: ['up', 'down', 'left', 'right'],
+    hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],  
+    
   };
 
   var descriptor = {
