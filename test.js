@@ -363,28 +363,8 @@
   };
 
   var blocks = [
-  en:[
-	  ['h', 'when device is connected', 'whenConnected'],
-	  [' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
-	  ['-'],
-	  ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
-	  ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
-	  ['-'],
-      [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
-      [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
-      ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
-      ['b', 'pin %d.digitalInputs on?', 'digitalRead', 9],
-      ['-'],
-      ['h', 'when analog pin %d.analogInputs %m.ops %n%', 'whenAnalogRead', 'A0', '>', 50],
-      ['r', 'read analog pin %d.analogInputs', 'analogRead', 'A0'],
-      ['-'],
-      ['h', 'when shaken', 'whenIMUEvent'],
-      ['r', 'tilt angle %m.tiltDir', 'getTilt', 'up'],
-      ['-'],
-      [' ', 'set pin %d.digitalOutputs servo to %n degrees', 'rotateServo', 7, 90],
-      ['r', 'pin %d.digitalOutputs servo position', 'servoPosition', 7]
-	 ],
-   zh:[
+
+  
 	  ['h', '当设备连接的时候', 'whenConnected'],
 	  [' ', '连接 %m.hwIn 到管脚 %n', 'connectHW', 'rotation knob', 0],
 	  ['-'],
@@ -404,21 +384,12 @@
       ['-'],
       [' ', '设置 管脚 %d.digitalOutputs 的输出转动 到 %n degrees', 'rotateServo', 7, 90],
       ['r', '管脚 %d.digitalOutputs 电机状态', 'servoPosition', 7]   
-   ],
+ 
   ];
 
   var menus = {
-	en:{
-      digitalOutputs: DIGITAL_PINS,
-      analogOutputs: PWM_PINS,
-      digitalInputs: DIGITAL_PINS,
-      analogInputs: ANALOG_PINS,
-      outputs: ['on', 'off'],
-      ops: ['>', '=', '<'],
-      tiltDir: ['up', 'down', 'left', 'right'],
-	  hwIn: ['rotation knob', 'light sensor', 'temperature sensor']
-	},
-	zh:{
+
+
 	  digitalOutputs: DIGITAL_PINS,
       analogOutputs: PWM_PINS,
       digitalInputs: DIGITAL_PINS,
@@ -427,7 +398,7 @@
       ops: ['>', '=', '<'],
       tiltDir: ['上', '下', '左', '右'],
 	  hwIn: ['旋钮', '光线传感器', '温度传感器']
-	},
+
 	
   };
 
