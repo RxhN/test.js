@@ -390,15 +390,14 @@
   var menus = {
 
 
-	  digitalOutputs: DIGITAL_PINS,
+      digitalOutputs: DIGITAL_PINS,
       analogOutputs: PWM_PINS,
       digitalInputs: DIGITAL_PINS,
       analogInputs: ANALOG_PINS,
-      outputs: ['开', '光'],
+      outputs: ['on', 'off'],
       ops: ['>', '=', '<'],
-      tiltDir: ['上', '下', '左', '右'],
-	  hwIn: ['旋钮', '光线传感器', '温度传感器']
-
+      tiltDir: ['up', 'down', 'left', 'right'],
+	  hwIn: ['rotation knob', 'light sensor', 'temperature sensor']
 	
   };
 
