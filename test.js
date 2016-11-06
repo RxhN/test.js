@@ -407,8 +407,8 @@
     ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
-	[' ','Neurons_Learn','neurons_Learn'],
-	[' ', 'read neurons   %d.digitalOutputs %m.outputs', 'read_neurons', 13, 'on'],
+
+	[' ', 'read neurons', 'read_neurons'],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
