@@ -409,7 +409,7 @@
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
         ['h','Neurons_read','neurons_learn'],
-	[' ', 'train %m.tran to neurons by %n', 'read_neurons','sensor_data',1],
+	[' ', 'train %d.digitalOutputs to neurons by %n', 'read_neurons','13',1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
