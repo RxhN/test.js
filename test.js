@@ -138,7 +138,7 @@
   }
   
   function read_neurons(){
-	device.send(new Uint8Array([CMD_READ_NEURONS]).buffer);
+	device.send(new Uint8Array([CMD_READ_NEURONS, trandata, cat]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -378,8 +378,9 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(){
-	read_neurons();
+  ext.read_neurons = function(trandata, cat){
+	
+	read_neurons(trandate,cat);
   };
  
   ext._deviceConnected = function(dev) {
@@ -408,7 +409,7 @@
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
 
-	[' ', 'read neurons', 'read_neurons'],
+	[' ', 'train %.tran to neurons by %n', 'read_neurons','sensordata_data',1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
@@ -433,7 +434,8 @@
     outputs: ['on', 'off'],  
     ops: ['>', '=', '<'],
     tiltDir: ['up', 'down', 'left', 'right'],
-    hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],  
+    hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],
+    tran:['sensor_data','inputdata'],
     
   };
 
