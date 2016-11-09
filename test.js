@@ -138,7 +138,7 @@
   }
   
   function read_neurons(){
-	device.send(new Uint8Array([CMD_READ_NEURONS, trandata, cat]).buffer);
+	device.send(new Uint8Array([CMD_READ_NEURONS]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -380,7 +380,7 @@
   };
   ext.read_neurons = function(trandata, cat){
 	
-	read_neurons(trandate,cat);
+	read_neurons(t);
   };
  
   ext._deviceConnected = function(dev) {
