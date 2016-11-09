@@ -36,8 +36,8 @@
     CMD_IMU_EVENT = 0x7B,
     CMD_PING = 0x7C,
     CMD_PING_CONFIRM = 0x7D;
-	CMD_NEURONS_LEARN = 0x7E;
-	CMD_READ_NEURONS = 0x7F;
+    CMD_NEURONS_LEARN = 0x7E;
+    CMD_READ_NEURONS = 0x7F;
 
   var IMU_EVENT_TAP = 0x00,
     IMU_EVENT_DOUBLE_TAP = 0x01,
@@ -133,8 +133,8 @@
     servoVals[pin] = deg;
   }
   
-  function neurons_learn(){
-	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
+  function neurons_learn(traindata, ncat){
+	device.send(new Uint8Array([CMD_NEURONS_LEARN, traindata, ncat]).buffer);
   }
   
   function read_neurons(){
@@ -268,10 +268,10 @@
       imuEventData = storedInputData.slice(0, 3);
       break;
 	case NEURONS_LEARN:
-	  neurons_learnDate=storedInputData.slice(0,8);
+	  neurons_learnDate=storedInputData.slice(0,10);
 	  break;
 	case READ_NEURONS:
-	  read_neuronsDate=storedInputData.slice(0,8);
+	  read_neuronsDate=storedInputData.slice(0,10);
 	  break;  
 	  
     }
@@ -378,9 +378,9 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(){
+  ext.read_neurons = function(traindata, ncat){
 	
-	read_neurons();
+	read_neurons(traindata, ncat);
   };
  
   ext._deviceConnected = function(dev) {
