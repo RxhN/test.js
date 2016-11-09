@@ -137,8 +137,8 @@
 	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
   }
   
-  function read_neurons(){
-	device.send(new Uint8Array([CMD_READ_NEURONS]).buffer);
+  function read_neurons(traindata, cat){
+	device.send(new Uint8Array([CMD_READ_NEURONS, traindata, cat]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -378,9 +378,9 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(trandata, cat){
+  ext.read_neurons = function(traindata, cat){
 	
-	read_neurons();
+	read_neurons(trandata, cat);
   };
  
   ext._deviceConnected = function(dev) {
@@ -408,7 +408,7 @@
     ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
-        ['h','Neurons_read','neurons_learn'],
+        ['','Neurons_read','neurons_learn'],
 	[' ', 'train %d.digitalOutputs to neurons by %n', 'read_neurons','13',1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
