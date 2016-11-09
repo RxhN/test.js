@@ -380,7 +380,7 @@
   };
   ext.read_neurons = function(trandata, cat){
 	
-	read_neurons(t);
+	read_neurons();
   };
  
   ext._deviceConnected = function(dev) {
