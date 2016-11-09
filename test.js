@@ -133,12 +133,13 @@
     servoVals[pin] = deg;
   }
   
-  function neurons_learn(traindata, ncat){
-	device.send(new Uint8Array([CMD_NEURONS_LEARN, traindata, ncat]).buffer);
+  function neurons_learn(){
+	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
   }
   
-  function read_neurons(){
-	device.send(new Uint8Array([CMD_READ_NEURONS]).buffer);
+  function read_neurons(pin, ncat){
+	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
+	device.send(new Uint8Array([CMD_READ_NEURONS,pin, ncat]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -378,9 +379,9 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(traindata, ncat){
+  ext.read_neurons = function(pin, ncat){
 	
-	read_neurons(traindata, ncat);
+	read_neurons(pin, ncat);
   };
  
   ext._deviceConnected = function(dev) {
@@ -410,7 +411,7 @@
     ['-'],
         ['','Neurons_read','neurons_learn'],
 	['','test','read_neurons'],
-	[' ', 'train %d.digitalInputs to neurons by %m.outputs', 'read_neurons', 13 ,'on'],
+	[' ', 'train %d.digitalOuputs to neurons by %m.outputs', 'read_neurons', 13 ,'on'],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
