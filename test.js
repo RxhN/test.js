@@ -137,9 +137,9 @@
 	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
   }
   
-  function read_neurons(pin, ncat){
+  function read_neurons(pin, val){
 	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
-	device.send(new Uint8Array([CMD_READ_NEURONS,pin, ncat]).buffer);
+	device.send(new Uint8Array([CMD_READ_NEURONS,pin, val]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -379,9 +379,9 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(pin, ncat){
+  ext.read_neurons = function(pin, val){
 	
-	read_neurons(pin, ncat);
+	read_neurons(pin, val);
   };
  
   ext._deviceConnected = function(dev) {
@@ -404,14 +404,14 @@
 
   var blocks = [
     ['h', 'when device is connected', 'whenConnected'],
-    [' ', 'connect %m.hwIn to analog %n', 'connectHW', 'rotation knob', 0],
+    [' ', 'connect %m.hwIn to analog %n%', 'connectHW', 'rotation knob', 0],
     ['-'],
     ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
         ['','Neurons_read','neurons_learn'],
 	['','test','read_neurons'],
-	[' ', 'train %d.digitalOuputs to neurons by %m.outputs', 'read_neurons', 13 ,'on'],
+	[' ', 'train %d.digitalOuputs to neurons by %n%', 'read_neurons', 13 ,1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
