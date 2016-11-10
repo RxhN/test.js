@@ -38,7 +38,9 @@
     CMD_PING_CONFIRM = 0x7D;
     CMD_NEURONS_LEARN = 0x7E;
     CMD_READ_NEURONS = 0x7F;
-
+	CMD_NEURONS_TRAIN = 0x83;
+    CMD_NEURONS_REGNIZE = 0x84;
+	
   var IMU_EVENT_TAP = 0x00,
     IMU_EVENT_DOUBLE_TAP = 0x01,
     IMU_EVENT_SHAKE = 0x02;
@@ -140,6 +142,14 @@
   function read_neurons(pin, val){
 	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
 	device.send(new Uint8Array([CMD_READ_NEURONS,pin, val]).buffer);
+  }
+  function neurons_train(pin, val){
+	 if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
+	device.send(new Uint8Array([CMD_NEURONS_TRAIN,pin, val]).buffer);
+  }
+  
+  function neurons_regnize(){
+	device.send(new Uint8Array([NEURONS_REGNIZE]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -383,6 +393,13 @@
 	
 	read_neurons(pin, val);
   };
+  ext.neurons_train = function(pin, val){
+	  
+	 neurons_train(pin, val);
+  }
+  ext.neurons_regnize = function(){
+	  neurons_regnize();
+  }
  
   ext._deviceConnected = function(dev) {
     potentialDevices.push(dev);
@@ -409,9 +426,11 @@
     ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
-        ['','Neurons_read','neurons_learn'],
-	['','test','read_neurons'],
-	[' ', 'train %d.digitalOuputs to neurons by %n%', 'read_neurons', 13 ,1],
+    [' ', 'Neurons_read','neurons_learn'],
+	[' ', 'train %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
+	['-'],
+    [' ', 'Neurons_regnize','neurons_regnize'],
+	[' ', 'train %d.digitalOuputs to neurons by %n', 'neurons_train', 13 ,1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
