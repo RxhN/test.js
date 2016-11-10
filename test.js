@@ -38,8 +38,8 @@
     CMD_PING_CONFIRM = 0x7D;
     CMD_NEURONS_LEARN = 0x7E;
     CMD_READ_NEURONS = 0x7F;
-	CMD_NEURONS_TRAIN = 0x83;
-    CMD_NEURONS_REGNIZE = 0x84;
+	CMD_NEURONS_TRAIN = 0x71;
+    CMD_NEURONS_REGNIZE = 0x72;
 	
   var IMU_EVENT_TAP = 0x00,
     IMU_EVENT_DOUBLE_TAP = 0x01,
@@ -149,7 +149,7 @@
   }
   
   function neurons_regnize(){
-	device.send(new Uint8Array([NEURONS_REGNIZE]).buffer);
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZE]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -238,6 +238,19 @@
           waitForData = 8;
           bytesRead = 0;
           break;
+		case NEURONS_TRAIN:
+		  parsingCmd = true;
+          command = inputData[i];
+          waitForData = 8;
+          bytesRead = 0;
+          break;
+		case NEURONS_REGNIZE:
+		  parsingCmd = true;
+          command = inputData[i];
+          waitForData = 8;
+          bytesRead = 0;
+          break;
+		
         }
       }
     }
