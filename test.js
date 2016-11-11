@@ -36,10 +36,10 @@
     CMD_IMU_EVENT = 0x7B,
     CMD_PING = 0x7C,
     CMD_PING_CONFIRM = 0x7D;
-    CMD_NEURONS_LEARN = 0x71;
-    CMD_READ_NEURONS = 0x72;
-	CMD_NEURONS_TRAIN = 0x7E;
-    CMD_NEURONS_REGNIZE = 0x7F;
+    CMD_NEURONS_LEARN = 0x7E;
+    CMD_READ_NEURONS = 0x7F;
+	CMD_NEURONS_TRAIN = 0x71;
+    CMD_NEURONS_REGNIZE = 0x72;
 	
   var IMU_EVENT_TAP = 0x00,
     IMU_EVENT_DOUBLE_TAP = 0x01,
@@ -64,8 +64,6 @@
     servoVals = new Uint8Array(12),
 	neurons_learnDate = new Uint8Array(8);
 	read_neuronsDate = new Uint8Array(8);
-	neurons_trainDate = new Uint8Array(8);
-	neurons_regnizeDate = new Uint8Array(8);
   var notifyConnection = false;
   var device = null;
   var inputData = null;
@@ -141,8 +139,9 @@
 	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
   }
   
-  function read_neurons(val){
-	device.send(new Uint8Array([CMD_READ_NEURONS, val]).buffer);
+  function read_neurons(pin, val){
+	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
+	device.send(new Uint8Array([CMD_READ_NEURONS,pin, val]).buffer);
   }
   function neurons_train(pin, val){
 	 if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
@@ -297,12 +296,6 @@
 	  break;
 	case READ_NEURONS:
 	  read_neuronsDate=storedInputData.slice(0,10);
-	  break; 
-        case NEURONS_TRAIN:
-	  neurons_trainDate=storedInputData.slice(0,10);
-	  break;  
-         case NEURONS_REGNIZE:
-	  neurons_regnizeDate=storedInputData.slice(0,10);
 	  break;  
 	  
     }
@@ -409,9 +402,9 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(val){
+  ext.read_neurons = function(pin, val){
 	
-	read_neurons(val);
+	read_neurons(pin, val);
   };
   ext.neurons_train = function(pin, val){
 	  
@@ -447,7 +440,7 @@
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
     [' ', 'Neurons_read','neurons_learn'],
-	[' ', 'train motion to neurons by %n', 'read_neurons' ,1],
+	[' ', 'train %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
 	['-'],
     [' ', 'Neurons_regnize','neurons_regnize'],
 	[' ', 'train %d.digitalOuputs to neurons by %n', 'neurons_train', 13 ,1],
