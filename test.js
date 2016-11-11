@@ -64,6 +64,8 @@
     servoVals = new Uint8Array(12),
 	neurons_learnDate = new Uint8Array(8);
 	read_neuronsDate = new Uint8Array(8);
+	neurons_trainDate = new Uint8Array(8);
+	neurons_regnizeDate = new Uint8Array(8);
   var notifyConnection = false;
   var device = null;
   var inputData = null;
@@ -139,9 +141,8 @@
 	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
   }
   
-  function read_neurons(pin, val){
-	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
-	device.send(new Uint8Array([CMD_READ_NEURONS,pin, val]).buffer);
+  function read_neurons(val){
+	device.send(new Uint8Array([CMD_READ_NEURONS, val]).buffer);
   }
   function neurons_train(pin, val){
 	 if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
@@ -296,6 +297,12 @@
 	  break;
 	case READ_NEURONS:
 	  read_neuronsDate=storedInputData.slice(0,10);
+	  break; 
+        case NEURONS_TRAIN:
+	  neurons_trainDate=storedInputData.slice(0,10);
+	  break;  
+         case NEURONS_REGNIZE:
+	  neurons_regnizeDate=storedInputData.slice(0,10);
 	  break;  
 	  
     }
@@ -402,9 +409,9 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(pin, val){
+  ext.read_neurons = function(val){
 	
-	read_neurons(pin, val);
+	read_neurons(val);
   };
   ext.neurons_train = function(pin, val){
 	  
@@ -440,7 +447,7 @@
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
     [' ', 'Neurons_read','neurons_learn'],
-	[' ', 'train %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
+	[' ', 'train motion to neurons by %n', 'read_neurons' ,1],
 	['-'],
     [' ', 'Neurons_regnize','neurons_regnize'],
 	[' ', 'train %d.digitalOuputs to neurons by %n', 'neurons_train', 13 ,1],
