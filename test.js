@@ -150,7 +150,7 @@
   
   function neurons_regnize(pin){
 	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
-	device.send(new Uint8Array([CMD_NEURONS_REGNIZEm,pin]).buffer);
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZE,pin]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
