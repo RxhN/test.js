@@ -148,8 +148,9 @@
 	device.send(new Uint8Array([CMD_NEURONS_TRAIN,pin, val]).buffer);
   }
   
-  function neurons_regnize(){
-	device.send(new Uint8Array([CMD_NEURONS_REGNIZE]).buffer);
+  function neurons_regnize(pin){
+	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZEm,pin]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -410,8 +411,8 @@
 	  
 	 neurons_train(pin, val);
   }
-  ext.neurons_regnize = function(){
-	  neurons_regnize();
+  ext.neurons_regnize = function(pin){
+	  neurons_regnize(pin);
   }
  
   ext._deviceConnected = function(dev) {
@@ -440,9 +441,9 @@
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
     [' ', 'Neurons_read','neurons_learn'],
-	[' ', 'train %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
+	[' ', 'train motion %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
 	['-'],
-    [' ', 'Neurons_regnize','neurons_regnize'],
+    [' ', 'Neurons_regnize %d.digitalOuputs','neurons_regnize',13],
 	[' ', 'train %d.digitalOuputs to neurons by %n', 'neurons_train', 13 ,1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
