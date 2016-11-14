@@ -443,7 +443,7 @@
     [' ', 'Neurons_read','neurons_learn'],
 	[' ', 'train motion %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
 	['-'],
-    [' ', 'Neurons_regnize %d.digitalOutputs,'neurons_regnize',13],
+    [' ', 'Neurons_regnize %d.digitalOutputs','neurons_regnize',13],
 	[' ', 'train %d.digitalOutputs to neurons by %n', 'neurons_train', 13 ,1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
