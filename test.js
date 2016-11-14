@@ -444,7 +444,7 @@
 	[' ', 'train motion %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
 	['-'],
     [' ', 'Neurons_regnize %d.analogInputs','neurons_regnize','A0'],
-	[' ', 'train %d.analogInputs to neurons by %n', 'neurons_train', 'A0' ,1],
+	[' ', 'train %d.digitalOutputs to neurons by %n', 'neurons_train', 13 ,1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
