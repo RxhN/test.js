@@ -139,18 +139,18 @@
 	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
   }
   
-  function read_neurons(pin, val){
-	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
-	device.send(new Uint8Array([CMD_READ_NEURONS,pin, val]).buffer);
+  function read_neurons(val){
+	
+	device.send(new Uint8Array([CMD_READ_NEURONS, val]).buffer);
   }
-  function neurons_train(pin, val){
-	 if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
-	device.send(new Uint8Array([CMD_NEURONS_TRAIN,pin, val]).buffer);
+  function neurons_train(val){
+	
+	device.send(new Uint8Array([CMD_NEURONS_TRAIN, val]).buffer);
   }
   
-  function neurons_regnize(pin){
-	if (DIGITAL_PINS.indexOf(parseInt(pin)) === -1) return;
-	device.send(new Uint8Array([CMD_NEURONS_REGNIZE,pin]).buffer);
+  function neurons_regnize(){
+	
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZE]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -403,16 +403,16 @@
   ext.neurons_learn = function(){
 	neurons_learn();
   };
-  ext.read_neurons = function(pin, val){
+  ext.read_neurons = function(val){
 	
-	read_neurons(pin, val);
+	read_neurons(val);
   };
-  ext.neurons_train = function(pin, val){
+  ext.neurons_train = function(val){
 	  
-	 neurons_train(pin, val);
+	 neurons_train(val);
   }
-  ext.neurons_regnize = function(pin){
-	  neurons_regnize(pin);
+  ext.neurons_regnize = function(){
+	  neurons_regnize();
   }
  
   ext._deviceConnected = function(dev) {
@@ -441,10 +441,10 @@
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
     [' ', 'Neurons_read','neurons_learn'],
-	[' ', 'train motion %d.digitalOuputs to neurons by %n', 'read_neurons', 13 ,1],
+	[' ', 'train motion to neurons by %n', 'read_neurons', 1],
 	['-'],
-    [' ', 'Neurons_regnize %d.digitalOutputs','neurons_regnize',13],
-	[' ', 'train %d.digitalOutputs to neurons by %n', 'neurons_train', 13 ,1],
+    [' ', 'Neurons_regnize ','neurons_regnize',],
+	[' ', 'train A0 to neurons by %n', 'neurons_train',1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
