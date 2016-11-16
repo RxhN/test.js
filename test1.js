@@ -24,7 +24,7 @@
   var bytesRead = 0;
   var waitForData = 0;
   var storedInputData = new Uint8Array(4096);
-
+  
   var CMD_DIGITAL_WRITE = 0x73,
     CMD_ANALOG_WRITE = 0x74,
     CMD_PIN_MODE = 0x75,
@@ -36,7 +36,11 @@
     CMD_IMU_EVENT = 0x7B,
     CMD_PING = 0x7C,
     CMD_PING_CONFIRM = 0x7D;
-
+    CMD_NEURONS_LEARN = 0x71;
+    CMD_READ_NEURONS = 0x72;
+	CMD_NEURONS_TRAIN = 0x7E;
+    CMD_NEURONS_REGNIZE = 0x7F;
+	
   var IMU_EVENT_TAP = 0x00,
     IMU_EVENT_DOUBLE_TAP = 0x01,
     IMU_EVENT_SHAKE = 0x02;
@@ -52,13 +56,44 @@
     OUTPUT = 1;
 
   var digitalInputData = new Uint8Array(12),
+    digitalOutputData = new Uint8Array(12),
     pinModes = new Uint8Array(12),
     analogInputData = new Uint8Array(6),
     accelInputData = [0,0],
     imuEventData = new Uint8Array(3),
-    servoVals = new Uint8Array(12);
-
+    servoVals = new Uint8Array(12),
+	neurons_learnDate = new Uint8Array(8);
+	read_neuronsDate = new Uint8Array(8);
+  var notifyConnection = false;
   var device = null;
+  var inputData = null;
+  var connected = false;
+  var hwList = new HWList();
+	
+  
+  function HWList() {
+    this.devices = [];
+
+    this.add = function(dev, pin) {
+      var device = this.search(dev);
+      if (!device) {
+        device = {name: dev, pin: pin, val: 0};
+        this.devices.push(device);
+      } else {
+        device.pin = pin;
+        device.val = 0;
+      }
+    };
+
+    this.search = function(dev) {
+      for (var i=0; i<this.devices.length; i++) {
+        if (this.devices[i].name === dev)
+          return this.devices[i];
+      }
+      return null;
+    };
+  }
+
 
   function analogRead(aPin) {
     var pin = -1;
@@ -99,7 +134,25 @@
     device.send(new Uint8Array([CMD_SERVO_WRITE, pin, deg]).buffer);
     servoVals[pin] = deg;
   }
-
+  
+  function neurons_learn(){
+	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
+  }
+  
+  function read_neurons(val){
+	
+	device.send(new Uint8Array([CMD_READ_NEURONS, val]).buffer);
+  }
+  function neurons_train(pin, val){
+	
+	device.send(new Uint8Array([CMD_NEURONS_TRAIN,pin, val]).buffer);
+  }
+  
+  function neurons_regnize(){
+	
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZE]).buffer);
+  }
+  
   function map(val, aMin, aMax, bMin, bMax) {
     if (val > aMax) val = aMax;
     else if (val < aMin) val = aMin;
@@ -174,6 +227,31 @@
           waitForData = 3;
           bytesRead = 0;
           break;
+		case NEURONS_LEARN:
+		  parsingCmd = true;
+          command = inputData[i];
+          waitForData = 8;
+          bytesRead = 0;
+          break;
+		case READ_NEURONS:
+		  parsingCmd = true;
+          command = inputData[i];
+          waitForData = 8;
+          bytesRead = 0;
+          break;
+		case NEURONS_TRAIN:
+		  parsingCmd = true;
+          command = inputData[i];
+          waitForData = 8;
+          bytesRead = 0;
+          break;
+		case NEURONS_REGNIZE:
+		  parsingCmd = true;
+          command = inputData[i];
+          waitForData = 8;
+          bytesRead = 0;
+          break;
+		
         }
       }
     }
@@ -214,6 +292,13 @@
     case CMD_IMU_EVENT:
       imuEventData = storedInputData.slice(0, 3);
       break;
+	case NEURONS_LEARN:
+	  neurons_learnDate=storedInputData.slice(0,10);
+	  break;
+	case READ_NEURONS:
+	  read_neuronsDate=storedInputData.slice(0,10);
+	  break;  
+	  
     }
   }
 
@@ -287,7 +372,49 @@
     if (connected) return {status: 2, msg: 'Arduino connected'};
     else return {status: 1, msg: 'Arduino disconnected'};
   };
-
+  
+  ext.whenInput = function(name, op, val) {
+    var hw = hwList.search(name);
+    if (!hw) return;
+    if (op == '>')
+      return analogRead(hw.pin) > val;
+    else if (op == '<')
+      return analogRead(hw.pin) < val;
+    else if (op == '=')
+      return analogRead(hw.pin) == val;
+    else
+      return false;
+  };
+    
+  ext.readInput = function(name) {
+    var hw = hwList.search(name);
+    if (!hw) return;
+    return analogRead(hw.pin);
+  };
+  
+  ext.whenConnected = function() {
+    if (notifyConnection) return true;
+    return false;
+  };
+  
+  ext.connectHW = function(hw, pin) {
+    hwList.add(hw, pin);
+  };
+  ext.neurons_learn = function(){
+	neurons_learn();
+  };
+  ext.read_neurons = function(val){
+	
+	read_neurons(val);
+  };
+  ext.neurons_train = function(pin, val){
+	  
+	 neurons_train(pin, val);
+  }
+  ext.neurons_regnize = function(){
+	  neurons_regnize();
+  }
+ 
   ext._deviceConnected = function(dev) {
     potentialDevices.push(dev);
     if (!device) tryNextDevice();
@@ -307,6 +434,18 @@
   };
 
   var blocks = [
+    ['h', 'when device is connected', 'whenConnected'],
+    [' ', 'connect %m.hwIn to analog %n%', 'connectHW', 'rotation knob', 0],
+    ['-'],
+    ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
+    ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
+    ['-'],
+    [' ', 'Neurons_read','neurons_learn'],
+	[' ', 'train motion to neurons by %n', 'read_neurons', 1],
+	['-'],
+    [' ', 'Neurons_regnize ','neurons_regnize',],
+	[' ', 'train  %d.analogInputs to neurons by %n', 'neurons_train', 'A0',1],
+	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
     ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
@@ -327,15 +466,18 @@
     analogOutputs: PWM_PINS,
     digitalInputs: DIGITAL_PINS,
     analogInputs: ANALOG_PINS,
-    outputs: ['on', 'off'],
+    outputs: ['on', 'off'],  
     ops: ['>', '=', '<'],
-    tiltDir: ['up', 'down', 'left', 'right']
+    tiltDir: ['up', 'down', 'left', 'right'],
+    hwIn: ['rotation knob', 'light sensor', 'temperature sensor'],
+    tran:['sensor_data','inputdata'],
+    
   };
 
   var descriptor = {
     blocks: blocks,
     menus: menus,
-    url: 'http://khanning.github.io/scratch-arduino-extension'
+    url: 'http://rxhn.github.io/test.js/test1.js'
   };
 
   ScratchExtensions.register('Arduino 101', descriptor, ext, {type: 'serial'});
