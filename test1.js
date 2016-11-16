@@ -148,9 +148,9 @@
 	device.send(new Uint8Array([CMD_NEURONS_TRAIN,pin, val]).buffer);
   }
   
-  function neurons_regnize(){
+  function neurons_regnize(pin){
 	
-	device.send(new Uint8Array([CMD_NEURONS_REGNIZE]).buffer);
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZE,pin]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -411,8 +411,8 @@
 	  
 	 neurons_train(pin, val);
   }
-  ext.neurons_regnize = function(){
-	  neurons_regnize();
+  ext.neurons_regnize = function(pin){
+	  neurons_regnize(pin);
   }
  
   ext._deviceConnected = function(dev) {
@@ -443,7 +443,7 @@
     [' ', 'Neurons_read','neurons_learn'],
 	[' ', 'train motion to neurons by %n', 'read_neurons', 1],
 	['-'],
-    [' ', 'Neurons_regnize ','neurons_regnize',],
+    [' ', 'Neurons_regnize %d.analogInputs ','neurons_regnize','A0'],
 	[' ', 'train  %d.analogInputs to neurons by %n', 'neurons_train', 'A0',1],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
