@@ -149,9 +149,9 @@
 	device.send(new Uint8Array([CMD_NEURONS_TRAIN,pin, val]).buffer);
   }
   
-  function neurons_regnize(pin){
+  function neurons_regnize(pin,val){
 	
-	device.send(new Uint8Array([CMD_NEURONS_REGNIZE,pin]).buffer);
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZE,pin, val]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -412,8 +412,8 @@
 	  
 	 neurons_train(pin, val);
   }
-  ext.neurons_regnize = function(pin){
-	  neurons_regnize(pin);
+  ext.neurons_regnize = function(pin, val){
+	  neurons_regnize(pin, val);
   }
  
   ext._deviceConnected = function(dev) {
@@ -441,11 +441,11 @@
     ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
-    [' ', 'Neurons_read  %d.analogInputs','neurons_learn','A0'],
-	[' ', 'train motion to neurons by %d.analogInputs', 'read_neurons', 'A0'],
+    [' ', 'Neurons_read  %d.digitalOutputs','neurons_learn',13],
+	[' ', 'train motion to neurons by %d.digitalOutputs', 'read_neurons', 13],
 	['-'],
-    [' ', 'Neurons_regnize %d.analogInputs ','neurons_regnize','A0'],
-	[' ', 'train  %d.analogInputs to neurons by %d.analogInputs', 'neurons_train', 'A0','A0'],
+    [' ', 'Neurons_regnize %d.analogInputs %d.digitalOutputs','neurons_regnize','A0',13],
+	[' ', 'train  %d.analogInputs to neurons by %d.digitalOutputs', 'neurons_train', 'A0',13],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
@@ -478,7 +478,7 @@
   var descriptor = {
     blocks: blocks,
     menus: menus,
-    url: 'http://rxhn.github.io/test.js/test.js'
+    url: 'http://rxhn.github.io/test.js/test1.js'
   };
 
   ScratchExtensions.register('Arduino 101', descriptor, ext, {type: 'serial'});
