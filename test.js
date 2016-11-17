@@ -135,22 +135,23 @@
     servoVals[pin] = deg;
   }
   
-  function neurons_learn(){
-	device.send(new Uint8Array([CMD_NEURONS_LEARN]).buffer);
+  function neurons_learn(pin){
+
+	device.send(new Uint8Array([CMD_NEURONS_LEARN, pin]).buffer);
   }
   
   function read_neurons(val){
 	
 	device.send(new Uint8Array([CMD_READ_NEURONS, val]).buffer);
   }
-  function neurons_train(val){
+  function neurons_train(pin, val){
 	
-	device.send(new Uint8Array([CMD_NEURONS_TRAIN, val]).buffer);
+	device.send(new Uint8Array([CMD_NEURONS_TRAIN,pin, val]).buffer);
   }
   
-  function neurons_regnize(){
+  function neurons_regnize(pin){
 	
-	device.send(new Uint8Array([CMD_NEURONS_REGNIZE]).buffer);
+	device.send(new Uint8Array([CMD_NEURONS_REGNIZE,pin]).buffer);
   }
   
   function map(val, aMin, aMax, bMin, bMax) {
@@ -400,19 +401,19 @@
   ext.connectHW = function(hw, pin) {
     hwList.add(hw, pin);
   };
-  ext.neurons_learn = function(){
-	neurons_learn();
+  ext.neurons_learn = function(pin){
+	neurons_learn(pin);
   };
   ext.read_neurons = function(val){
 	
 	read_neurons(val);
   };
-  ext.neurons_train = function(val){
+  ext.neurons_train = function(pin, val){
 	  
-	 neurons_train(val);
+	 neurons_train(pin, val);
   }
-  ext.neurons_regnize = function(){
-	  neurons_regnize();
+  ext.neurons_regnize = function(pin){
+	  neurons_regnize(pin);
   }
  
   ext._deviceConnected = function(dev) {
@@ -440,11 +441,11 @@
     ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
     ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
     ['-'],
-    [' ', 'Neurons_read','neurons_learn'],
-	[' ', 'train motion to neurons by %n', 'read_neurons', 1],
+    [' ', 'Neurons_read  %d.analogInputs','neurons_learn','A0'],
+	[' ', 'train motion to neurons by %d.analogInputs', 'read_neurons', 'A0'],
 	['-'],
-    [' ', 'Neurons_regnize ','neurons_regnize',],
-	[' ', 'train A0 to neurons by %n', 'neurons_train',1],
+    [' ', 'Neurons_regnize %d.analogInputs ','neurons_regnize','A0'],
+	[' ', 'train  %d.analogInputs to neurons by %d.analogInputs', 'neurons_train', 'A0','A0'],
 	['-'],
     [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
     [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
@@ -477,7 +478,7 @@
   var descriptor = {
     blocks: blocks,
     menus: menus,
-    url: 'http://khanning.github.io/scratch-arduino-extension'
+    url: 'http://rxhn.github.io/test.js/test.js'
   };
 
   ScratchExtensions.register('Arduino 101', descriptor, ext, {type: 'serial'});
