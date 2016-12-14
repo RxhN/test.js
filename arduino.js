@@ -449,34 +449,7 @@
   };
 
  var blocks = [
-   en:[
-	   ['h', 'when device is connected', 'whenConnected'],
-    [' ', 'connect %m.hwIn to analog %n%', 'connectHW', 'rotation knob', 0],
-    ['-'],
-    ['h', 'when %m.hwIn %m.ops %n%', 'whenInput', 'rotation knob', '>', 50],
-    ['r', 'read %m.hwIn', 'readInput', 'rotation knob'],
-    ['-'],
-    [' ', 'Neurons_read  %d.digitalOutputs','neurons_learn',13],
-	[' ', 'train motion to neurons by %d.digitalOutputs', 'read_neurons', 13],
-	['-'],
-    [' ', 'Neurons_regnize %d.analogInputs %d.digitalOutputs','neurons_regnize','A0',13],
-	[' ', 'train  %d.analogInputs to neurons by %d.digitalOutputs', 'neurons_train', 'A0',13],
-	['-'],
-    [' ', 'set pin %d.digitalOutputs %m.outputs', 'digitalWrite', 13, 'on'],
-    [' ', 'set pin %d.analogOutputs to %n%', 'analogWrite', 9, 100],
-    ['h', 'when pin %d.digitalInputs is %m.outputs', 'whenDigitalRead', 9, 'on'],
-    ['b', 'pin %d.digitalInputs on?', 'digitalRead', 9],
-    ['-'],
-    ['h', 'when analog pin %d.analogInputs %m.ops %n%', 'whenAnalogRead', 'A0', '>', 50],
-    ['r', 'read analog pin %d.analogInputs', 'analogRead', 'A0'],
-    ['-'],
-    ['h', 'when shaken', 'whenIMUEvent'],
-    ['r', 'tilt angle %m.tiltDir', 'getTilt', 'up'],
-    ['-'],
-    [' ', 'set pin %d.digitalOutputs servo to %n degrees', 'rotateServo', 7, 90],
-    ['r', 'pin %d.digitalOutputs servo position', 'servoPosition', 7]
-    ],
-    zh:[
+
     ['h', '当设备连接时', 'whenConnected'],
     [' ', '连接 %m.hwIn 到信号管脚%n%', 'connectHW', 'rotation knob', 0],
     ['-'],
@@ -502,7 +475,7 @@
     ['-'],
     [' ', '设置电平管脚 %d.digitalOutputs 的程度为 %n degrees', 'rotateServo', 7, 90],
     ['r', 'pin %d.digitalOutputs 电机状态', 'servoPosition', 7]
-    ]
+    
   ];
 
 
